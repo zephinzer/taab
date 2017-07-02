@@ -1,0 +1,20 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "extends": "google",
+  "rules": {
+    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+    "keyword-spacing": [
+      "error", {
+        "overrides": {
+          "if": { "after": false },
+          "for": { "after": false },
+          "while": { "after": false }
+        }
+      }
+    ],
+    "max-len": ["error", 127],
+    "valid-jsdoc": ["off"]
+  }
+}

@@ -11,6 +11,10 @@ TAAB.init = function(developerApiKey, personalToken) {
 };
 
 // CREATE
+
+/**
+ * @see https://developers.trello.com/advanced-reference/board#post-1-boards
+ */
 TAAB.prototype.createBoard = function({
   name = taabConst.defaults.boardName,
   defaultLabels = false,
@@ -20,14 +24,14 @@ TAAB.prototype.createBoard = function({
   idBoardSource,
   keepFromSource = 'all',
   powerUps,
-  prefs_permissionLevel,
-  prefs_voting,
-  prefs_comments,
-  prefs_invitations,
-  prefs_selfJoin,
-  prefs_cardCovers,
-  prefs_background = taabConst.defaults.backgroundColor,
-  prefs_cardAging,
+  prefs_permissionLevel, // eslint-disable-line camelcase
+  prefs_voting, // eslint-disable-line camelcase
+  prefs_comments, // eslint-disable-line camelcase
+  prefs_invitations, // eslint-disable-line camelcase
+  prefs_selfJoin, // eslint-disable-line camelcase
+  prefs_cardCovers, // eslint-disable-line camelcase
+  prefs_background = taabConst.defaults.backgroundColor, // eslint-disable-line camelcase
+  prefs_cardAging, // eslint-disable-line camelcase
 }) {
   return taabUtils.createApiHandler('post', `/boards`, {
     name,
@@ -49,6 +53,9 @@ TAAB.prototype.createBoard = function({
   }).bind(this)();
 };
 
+/**
+ * @see https://developers.trello.com/advanced-reference/list#post-1-lists
+ */
 TAAB.prototype.createList = function({
   name = taabConst.defaults.listName,
   idBoard,
@@ -63,6 +70,9 @@ TAAB.prototype.createList = function({
   }).bind(this)();
 };
 
+/**
+ * @see https://developers.trello.com/advanced-reference/card#post-1-cards
+ */
 TAAB.prototype.createCard = function({
   name = taabConst.defaults.cardName,
   desc = taabConst.defaults.cardDescription,

@@ -4,6 +4,7 @@
   "description": "Use Trello as a back-end!",
   "main": "index.js",
   "scripts": {
+    "eslint": "eslint .",
     "start": "nf start",
     "test": "mocha -R ./test"
   },
@@ -19,6 +20,8 @@
     "superagent": "^3.5.2"
   },
   "devDependencies": {
+    "eslint": "^4.1.1",
+    "eslint-config-google": "^0.8.0",
     "foreman": "^2.0.0",
     "mocha": "^3.4.2"
   }
