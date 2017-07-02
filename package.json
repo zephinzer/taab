@@ -1,0 +1,25 @@
+{
+  "name": "taab",
+  "version": "0.2.0",
+  "description": "Use Trello as a back-end!",
+  "main": "index.js",
+  "scripts": {
+    "start": "nf start",
+    "test": "mocha -R ./test"
+  },
+  "keywords": [
+    "trello",
+    "api",
+    "backend"
+  ],
+  "author": "zephinzer",
+  "license": "MIT",
+  "dependencies": {
+    "q": "^1.5.0",
+    "superagent": "^3.5.2"
+  },
+  "devDependencies": {
+    "foreman": "^2.0.0",
+    "mocha": "^3.4.2"
+  }
+}

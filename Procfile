@@ -1,0 +1,1 @@
+example: node examples/basic.js
