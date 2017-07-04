@@ -2,6 +2,8 @@
 TAAB is a data persistence module that you can `npm install` and use it as a data
 persistence mechanism.
 
+[![Build Status](https://travis-ci.org/zephinzer/taab.svg?branch=master)](https://travis-ci.org/zephinzer/taab)
+
 ## Get Trello Developer Keys
 1. Get your Trello Developer API Key from https://trello.com/app-key
 2. Obtain a personal development Token from https://trello.com/1/authorize?expiration=never&scope=read,write,account&response_type=token&name=Server%20Token&key=`<Trello Developer API Key>`
