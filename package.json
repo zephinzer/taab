@@ -6,7 +6,8 @@
   "scripts": {
     "eslint": "eslint .",
     "start": "nf start",
-    "test": "mocha -R ./test"
+    "test": "mocha test/setup.js ./test/*.test.js ./test/**/*.test.js",
+    "test-watch": "npm test -- --watch"
   },
   "keywords": [
     "trello",
@@ -20,9 +21,14 @@
     "superagent": "^3.5.2"
   },
   "devDependencies": {
+    "chai": "^4.0.2",
     "eslint": "^4.1.1",
     "eslint-config-google": "^0.8.0",
     "foreman": "^2.0.0",
-    "mocha": "^3.4.2"
+    "mocha": "^3.4.2",
+    "rewire": "^2.5.2",
+    "sinon": "^2.3.6",
+    "sinon-chai": "^2.11.0",
+    "supertest": "^3.0.0"
   }
 }
