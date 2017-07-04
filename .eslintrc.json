@@ -8,6 +8,7 @@
     "keyword-spacing": [
       "error", {
         "overrides": {
+          "catch": { "after": false },
           "if": { "after": false },
           "for": { "after": false },
           "while": { "after": false }
