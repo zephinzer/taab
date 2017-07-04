@@ -55,8 +55,6 @@ taabUtils.__set__({
   request: mockRequest,
 });
 
-console.log(taabUtils.__get__('request'));
-
 describe('taab utils', () => {
   it('has the correct properties/methods', () => {
     expect(taabUtils).to.contain.keys([
