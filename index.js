@@ -1,8 +1,11 @@
-const taabUtils = require('./lib/utils');
+const taabBoard = require('./lib/board');
 const taabConst = require('./lib/const');
+const taabUtils = require('./lib/utils');
+
 
 const TAAB = function(key, token) {
   this.config = {key, token};
+  this.createApiHandler = taabUtils.createApiHandler.bind(this);
   return this;
 };
 TAAB.constant = taabConst;
@@ -10,48 +13,10 @@ TAAB.init = function(developerApiKey, personalToken) {
   return new TAAB(developerApiKey, personalToken);
 };
 
-// CREATE
-
 /**
  * @see https://developers.trello.com/advanced-reference/board#post-1-boards
  */
-TAAB.prototype.createBoard = function({
-  name = taabConst.defaults.boardName,
-  defaultLabels = false,
-  defaultLists = false,
-  desc = taabConst.defaults.boardDescription,
-  idOrganization,
-  idBoardSource,
-  keepFromSource = 'all',
-  powerUps,
-  prefs_permissionLevel, // eslint-disable-line camelcase
-  prefs_voting, // eslint-disable-line camelcase
-  prefs_comments, // eslint-disable-line camelcase
-  prefs_invitations, // eslint-disable-line camelcase
-  prefs_selfJoin, // eslint-disable-line camelcase
-  prefs_cardCovers, // eslint-disable-line camelcase
-  prefs_background = taabConst.defaults.backgroundColor, // eslint-disable-line camelcase
-  prefs_cardAging, // eslint-disable-line camelcase
-}) {
-  return taabUtils.createApiHandler('post', `/boards`, {
-    name,
-    defaultLabels,
-    defaultLists,
-    desc,
-    idOrganization,
-    idBoardSource,
-    keepFromSource,
-    powerUps,
-    prefs_permissionLevel,
-    prefs_voting,
-    prefs_comments,
-    prefs_invitations,
-    prefs_selfJoin,
-    prefs_cardCovers,
-    prefs_background,
-    prefs_cardAging,
-  }).bind(this)();
-};
+TAAB.prototype.createBoard = taabBoard.create;
 
 /**
  * @see https://developers.trello.com/advanced-reference/list#post-1-lists
@@ -62,12 +27,16 @@ TAAB.prototype.createList = function({
   idListSource,
   pos,
 }) {
-  return taabUtils.createApiHandler('post', `/lists`, {
-    name,
-    idBoard,
-    idListSource,
-    pos,
-  }).bind(this)();
+  return taabUtils.createApiHandler.bind(this)()(
+    'post',
+    '/lists',
+    {
+      name,
+      idBoard,
+      idListSource,
+      pos,
+    }
+  );
 };
 
 /**
@@ -87,31 +56,43 @@ TAAB.prototype.createCard = function({
   idCardSource,
   keepFromSource,
 }) {
-  return taabUtils.createApiHandler('post', `/lists`, {
-    name,
-    desc,
-    pos,
-    due,
-    dueComplete,
-    idList,
-    idMembers,
-    idLabels,
-    urlSource,
-    fileSource,
-    idCardSource,
-    keepFromSource,
-  }).bind(this)();
+  return taabUtils.createApiHandler.bind(this)()(
+    'post',
+    '/cards',
+    {
+      name,
+      desc,
+      pos,
+      due,
+      dueComplete,
+      idList,
+      idMembers,
+      idLabels,
+      urlSource,
+      fileSource,
+      idCardSource,
+      keepFromSource,
+    }
+  );
 };
 
 
 // READ
-TAAB.prototype.getMember = function(memberId) {
-  return taabUtils.createApiHandler('get', `/members/${memberId}`).bind(this)();
+TAAB.prototype.verify = function() {
+  return this.createApiHandler('get', '/authorize')();
 };
-TAAB.prototype.getProfile = taabUtils.createApiHandler('get', '/members/me');
-TAAB.prototype.getBoards = taabUtils.createApiHandler('get', '/members/me/boards');
-TAAB.prototype.getOrganisations = taabUtils.createApiHandler('get', '/members/me/organizations');
-TAAB.prototype.getOrganizations = TAAB.prototype.getOrganisations;
-TAAB.prototype.getCards = taabUtils.createApiHandler('get', '/members/me/cards');
+TAAB.prototype.getMember = function(memberId) {
+  return this.createApiHandler('get', `/members/${memberId}`)();
+};
+TAAB.prototype.getProfile = function() {
+  return this.createApiHandler('get', '/members/me')();
+};
+TAAB.prototype.getBoards = taabBoard.query;
+TAAB.prototype.getOrganisations = TAAB.prototype.getOrganizations = function() {
+  return this.createApiHandler('get', '/members/me/organizations')();
+};
+TAAB.prototype.getCards = function() {
+  return this.createApiHandler('get', '/members/me/cards')();
+};
 
 module.exports = TAAB;

@@ -1,4 +1,6 @@
 .env
 Procfile
 examples
+test
 node_modules
+npm-debug.log

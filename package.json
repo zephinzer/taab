@@ -1,11 +1,11 @@
 {
   "name": "taab",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Use Trello as a back-end!",
   "main": "index.js",
   "scripts": {
     "eslint": "eslint .",
-    "start": "nf start",
+    "start": "node examples/basic.js",
     "test": "mocha test/setup.js ./test/*.test.js ./test/**/*.test.js",
     "test-watch": "npm test -- --watch"
   },
@@ -24,7 +24,7 @@
     "chai": "^4.0.2",
     "eslint": "^4.1.1",
     "eslint-config-google": "^0.8.0",
-    "foreman": "^2.0.0",
+    "inquirer": "^3.1.1",
     "mocha": "^3.4.2",
     "rewire": "^2.5.2",
     "sinon": "^2.3.6",

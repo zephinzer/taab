@@ -74,6 +74,12 @@ describe('taab utils', () => {
   });
 
   context('.createApiHandler()', () => {
+    let createApiHandler = null;
+
+    before(() => {
+      createApiHandler = taabUtils.createApiHandler.bind({config: mockConfig});
+    });
+
     beforeEach(() => {
       getSpy.reset();
       postSpy.reset();
@@ -85,24 +91,30 @@ describe('taab utils', () => {
     });
 
     it('returns a function', () => {
-      expect(taabUtils.createApiHandler()).to.be.a('function');
+      expect(createApiHandler()).to.be.a('function');
+    });
+
+    it('returns a function that does not throw if configuration is missing', () => {
+      expect(() => {
+        createApiHandler('get', '/')();
+      }).to.not.throw();
     });
 
     it('returns a function that returns a promise if no arguments are provided', () => {
-      const getHandler = taabUtils.createApiHandler('get', '/', {}, mockConfig);
+      const getHandler = createApiHandler('get', '/');
       const getHandlerResponse = getHandler();
       expect(Object.getPrototypeOf(getHandlerResponse))
         .to.deep.equal(Object.getPrototypeOf(q.defer().promise));
     });
 
     it('returns a function that does a callback if callback is provided', (done) => {
-      const getHandler = taabUtils.createApiHandler('get', '/', {}, mockConfig);
+      const getHandler = createApiHandler('get', '/');
       getHandler((err, res) => { done(); });
     });
 
     it('includes the appropriate parameters', (done) => {
       const mockParameters = {params: {a: 1}, options: {b: 2}};
-      const getHandler = taabUtils.createApiHandler('get', '/', mockParameters, mockConfig);
+      const getHandler = createApiHandler('get', '/', mockParameters);
       getHandler((err, res) => {
         try {
           expect(sendSpy).to.have.been.calledWith(mockParameters);
@@ -113,7 +125,7 @@ describe('taab utils', () => {
 
     it('generates the correct url', (done) => {
       const mockUrl = '/expected_url';
-      const getHandler = taabUtils.createApiHandler('get', mockUrl, {}, mockConfig);
+      const getHandler = createApiHandler('get', mockUrl, {});
       getHandler((err, res) => {
         try {
           expect(getSpy).to.have.been.calledWith(taabUtils.createUrl(mockUrl));
@@ -123,7 +135,7 @@ describe('taab utils', () => {
     });
 
     it('executes as expected for happy HTTP GETs', (done) => {
-      const getHandler = taabUtils.createApiHandler('get', '/', {}, mockConfig);
+      const getHandler = createApiHandler('get', '/', {});
       getHandler().then((res) => {
           expect(res).to.deep.equal('expected_body');
           expect(getSpy).to.have.been.calledOnce;
@@ -133,7 +145,7 @@ describe('taab utils', () => {
     });
 
     it('executes as expected for happy HTTP POSTs', (done) => {
-      const postHandler = taabUtils.createApiHandler('post', '/', {}, mockConfig);
+      const postHandler = createApiHandler('post', '/', {});
       postHandler().then((res) => {
           expect(res).to.deep.equal('expected_body');
           expect(postSpy).to.have.been.calledOnce;
@@ -143,7 +155,7 @@ describe('taab utils', () => {
     });
 
     it('executes as expected for happy HTTP PUTs', (done) => {
-      const putHandler = taabUtils.createApiHandler('put', '/', {}, mockConfig);
+      const putHandler = createApiHandler('put', '/', {});
       putHandler().then((res) => {
           expect(res).to.deep.equal('expected_body');
           expect(putSpy).to.have.been.calledOnce;
@@ -153,7 +165,7 @@ describe('taab utils', () => {
     });
 
     it('executes as expected for happy HTTP DELETEs', (done) => {
-      const delHandler = taabUtils.createApiHandler('del', '/', {}, mockConfig);
+      const delHandler = createApiHandler('del', '/', {});
       delHandler().then((res) => {
           expect(res).to.deep.equal('expected_body');
           expect(delSpy).to.have.been.calledOnce;
@@ -164,7 +176,7 @@ describe('taab utils', () => {
 
     it('executes as expected for sad HTTP GETs', (done) => {
       mockRequest.end = sadEnding;
-      const getHandler = taabUtils.createApiHandler('get', '/', {}, mockConfig);
+      const getHandler = createApiHandler('get', '/', {});
       getHandler().then(done)
         .catch((error) => {
           done();
@@ -173,7 +185,7 @@ describe('taab utils', () => {
 
     it('executes as expected for sad HTTP POSTs', (done) => {
       mockRequest.end = sadEnding;
-      const postHandler = taabUtils.createApiHandler('post', '/', {}, mockConfig);
+      const postHandler = createApiHandler('post', '/', {});
       postHandler().then(done)
         .catch((error) => {
           done();
@@ -182,7 +194,7 @@ describe('taab utils', () => {
 
     it('executes as expected for sad HTTP PUTs', (done) => {
       mockRequest.end = sadEnding;
-      const putHandler = taabUtils.createApiHandler('put', '/', {}, mockConfig);
+      const putHandler = createApiHandler('put', '/', {});
       putHandler().then(done)
         .catch((error) => {
           done();
@@ -191,7 +203,7 @@ describe('taab utils', () => {
 
     it('executes as expected for sad HTTP DELETEs', (done) => {
       mockRequest.end = sadEnding;
-      const delHandler = taabUtils.createApiHandler('del', '/', {}, mockConfig);
+      const delHandler = createApiHandler('del', '/', {});
       delHandler().then(done)
         .catch((error) => {
           done();
