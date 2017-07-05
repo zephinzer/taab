@@ -4,6 +4,42 @@ TAAB is a tool to use Trello like a NoSQL back-end by using Boards as the databa
 [![Build Status](https://travis-ci.org/zephinzer/taab.svg?branch=master)](https://travis-ci.org/zephinzer/taab)
 [![Dependency Status](https://david-dm.org/zephinzer/taab.svg)](https://david-dm.org/zephinzer/taab.svg)
 
+Please note that **this project is not ready for use till 1.0.0**. The roadmap is not clearly defined yet either, but the end-goal of this project should look like the following code snippet:
+
+```javascript
+const TAAB = require('taab');
+const taab = TAAB.init(TRELLO_API_DEVELOPER_KEY, TRELLO_TOKEN);
+const myProject = taab.db('my_project');
+
+// gets reference for `sub_project` list
+myProject.ref('sub_project');
+
+// gets details for `sub_project` list
+myProject.ref('sub_proj').info();
+
+// create `sub_project` list
+myProject.create('sub_project', { ... });
+
+// get all cards from `sub_project` list
+myProject.getAll('sub_project');
+// get all cards from `sub_project` list satisfying
+myProject.getAllWhere('sub_project', { ...CONDITIONS });
+// get card from `sub_project` list with ID `:id`
+myProject.get('sub_project', { id: ... });
+
+// update card from `sub_project` list with ID `:id`
+myProject.update('sub_project', { id: ... }, { ... });
+
+// delete card from `sub_project` list with ID `:id`
+myProject.del('sub_project', { id: ... });
+
+// move card from `sub_project` list with ID `:id` to `done_sub_project` list
+myProject.move(
+  myProject.get(`sub_project`, { id: ... }),
+  myProject.ref('done_sub_project')
+);
+```
+
 ## Get Trello Developer Keys
 1. Get your Trello Developer API Key from https://trello.com/app-key
 2. Obtain a personal development Token from https://trello.com/1/authorize?expiration=never&scope=read,write,account&response_type=token&name=Server%20Token&key=`<Trello Developer API Key>`
