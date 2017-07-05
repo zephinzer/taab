@@ -11,14 +11,14 @@ const TAAB = require('taab');
 const taab = TAAB.init(TRELLO_API_DEVELOPER_KEY, TRELLO_TOKEN);
 const myProject = taab.db('my_project');
 
+// create `sub_project` list
+myProject.create('sub_project', { ... });
+
 // gets reference for `sub_project` list
 myProject.ref('sub_project');
 
 // gets details for `sub_project` list
-myProject.ref('sub_proj').info();
-
-// create `sub_project` list
-myProject.create('sub_project', { ... });
+myProject.ref('sub_project').info();
 
 // get all cards from `sub_project` list
 myProject.getAll('sub_project');
