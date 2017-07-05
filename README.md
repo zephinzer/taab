@@ -1,6 +1,5 @@
 # Trello-As-A-Backend
-TAAB is a data persistence module that you can `npm install` and use it as a data
-persistence mechanism.
+TAAB is a tool to use Trello like a NoSQL back-end by using Boards as the databases, Lists as tables and Cards as rows. I imagine this is useful for creating customised Trello workflows which will be contextualised when accessing through your own interface, yet viewable by all through Trello itself. Feel free to fork & contribute.
 
 [![Build Status](https://travis-ci.org/zephinzer/taab.svg?branch=master)](https://travis-ci.org/zephinzer/taab)
 [![Dependency Status](https://david-dm.org/zephinzer/taab.svg)](https://david-dm.org/zephinzer/taab.svg)
@@ -196,6 +195,28 @@ taabInstance.verify()
   .then(() => { console.info('success'); })
   .catch((error) => { console.error('error'); });
 ```
+
+## SDLC
+### Process
+1. Fork this repository
+2. Make your changes
+3. Run `npm run eslint`
+4. Run `npm test`
+5. Merge into your `master` branch and create a Merge Request
+6. On passing of the Travis pipeline, we can merge it in.
+
+### Versioning
+We follow [`semver`](http://semver.org/) which means:
+
+1. MAJOR version when you make incompatible API changes,
+2. MINOR version when you add functionality in a backwards-compatible manner, and
+3. PATCH version when you make backwards-compatible bug fixes.
+
+Apply the appropriate changes to `package.json` when you contribute
+
+### Notes
+- Remember to update the readme if adding new APIs
+- Add it to the changelog below as well for the *next* version. Ie if the current version is 1.0.0 when you make the change, list it under 1.0.
 
 ## Changelog
 ### 3rd July 2017
