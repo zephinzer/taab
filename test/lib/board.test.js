@@ -1,3 +1,4 @@
+const taabConst = require('../../lib/const');
 const rewire = require('rewire');
 const taabBoard = rewire('../../lib/board');
 
@@ -5,8 +6,8 @@ const createApiHandlerSpy = sinon.spy();
 const apiHandler = sinon.spy();
 
 const mockTaabUtils = {
-  createApiHandler: (method, uri) => {
-    createApiHandlerSpy(method, uri);
+  createApiHandler: (method, uri, params) => {
+    createApiHandlerSpy(method, uri, params);
     return apiHandler;
   },
 };
@@ -32,7 +33,24 @@ describe('taab board', () => {
 
     it('calls the correct trello endpoint', () => {
       taabBoard.create({});
-      expect(createApiHandlerSpy).to.be.calledWith('post', '/boards');
+      expect(createApiHandlerSpy).to.be.calledWith('post', '/boards', {
+        name: taabConst.defaults.boardName,
+        defaultLabels: taabConst.defaults.boardDefaultLabels,
+        defaultLists: taabConst.defaults.boardDefaultLists,
+        desc: taabConst.defaults.boardDescription,
+        idOrganization: undefined,
+        idBoardSource: undefined,
+        keepFromSource: taabConst.defaults.boardKeepFromSource,
+        powerUps: undefined,
+        prefs_permissionLevel: undefined, // eslint-disable-line camelcase
+        prefs_voting: undefined, // eslint-disable-line camelcase
+        prefs_comments: undefined, // eslint-disable-line camelcase
+        prefs_invitations: undefined, // eslint-disable-line camelcase
+        prefs_selfJoin: undefined, // eslint-disable-line camelcase
+        prefs_cardCovers: undefined, // eslint-disable-line camelcase
+        prefs_background: taabConst.defaults.backgroundColor, // eslint-disable-line camelcase
+        prefs_cardAging: undefined, // eslint-disable-line camelcase
+      });
     });
   });
 
