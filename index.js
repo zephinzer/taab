@@ -1,5 +1,6 @@
 const taabBoard = require('./lib/board');
 const taabCard = require('./lib/card');
+const taabList = require('./lib/list');
 const taabConst = require('./lib/const');
 const taabUtils = require('./lib/utils');
 
@@ -23,23 +24,8 @@ TAAB.prototype.getBoards = taabBoard.query;
 /**
  * @see https://developers.trello.com/advanced-reference/list#post-1-lists
  */
-TAAB.prototype.createList = function({
-  name = taabConst.defaults.listName,
-  idBoard,
-  idListSource,
-  pos,
-}) {
-  return taabUtils.createApiHandler.bind(this)()(
-    'post',
-    '/lists',
-    {
-      name,
-      idBoard,
-      idListSource,
-      pos,
-    }
-  );
-};
+TAAB.prototype.createList = taabList.create;
+TAAB.prototype.getLists = taabList.query;
 
 /**
  * @see https://developers.trello.com/advanced-reference/card#post-1-cards
