@@ -31,7 +31,9 @@ TAAB.prototype.getLists = taabList.query;
  * @see https://developers.trello.com/advanced-reference/card#post-1-cards
  */
 TAAB.prototype.createCard = taabCard.create;
-TAAB.prototype.getCards = taabCard.query;
+TAAB.prototype.getAllCards = taabCard.queryAll;
+TAAB.prototype.getBoardCards = taabCard.queryBoard;
+TAAB.prototype.getListCards = taabCard.queryList;
 
 TAAB.prototype.verify = function() {
   return this.createApiHandler('get', '/authorize')();

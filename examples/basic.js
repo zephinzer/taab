@@ -22,6 +22,9 @@ const questions = {
         'get-boards',
         'create-list',
         'get-lists',
+        'create-card',
+        'get-all-cards',
+        'get-cards-by-list',
         'get-profile',
         'exit',
       ],
@@ -49,6 +52,29 @@ const questions = {
       message: 'Paste the board ID here',
     },
   ],
+  createCard: [
+    {
+      type: 'input',
+      name: 'listId',
+      message: 'Paste the list ID here',
+    },
+    {
+      type: 'input',
+      name: 'listName',
+      message: 'What name shall we give it?',
+    },
+  ],
+  getCards: [
+    {
+      possibleActions: [
+        'all of my cards',
+        'cards belonging to a list',
+      ],
+      message: 'Choose the most applicable:',
+      name: 'action',
+      type: 'list',
+    },
+  ],
 };
 
 let taabInstance = null;
@@ -57,6 +83,14 @@ let taabInstance = null;
   getCredentials()
     .then(loopActionSelection);
 })();
+
+/** ---------------------
+    _  _   _ _____ _  _ 
+   /_\| | | |_   _| || |
+  / _ \ |_| | | | | __ |
+ /_/ \_\___/  |_| |_||_|
+                        
+--------------------- **/
 
 function getCredentials() {
   const deferred = q.defer();
@@ -91,6 +125,9 @@ function loopActionSelection() {
       case 'get-boards': getBoards(loopActionSelection); break;
       case 'create-list': createList(loopActionSelection); break;
       case 'get-lists': getLists(loopActionSelection); break;
+      case 'create-card': createCard(loopActionSelection); break;
+      case 'get-all-cards': getAllCards(loopActionSelection); break;
+      case 'get-cards-by-list': getCardsByList(loopActionSelection); break;
       case 'get-profile': getProfile(loopActionSelection); break;
       case 'exit': process.exit(0); break;
       default:
@@ -120,6 +157,14 @@ function getCredentialsLoopTillSuccess(onSuccess) {
     .catch(console.error);
 };
 
+/** ----------------------------
+   ___  ___   _   ___ ___  ___ 
+  | _ )/ _ \ /_\ | _ \   \/ __|
+  | _ \ (_) / _ \|   / |) \__ \
+  |___/\___/_/ \_\_|_\___/|___/
+
+---------------------------- **/                              
+
 function createBoard(callback) {
   taabInstance.createBoard({})
     .then((res) => {
@@ -132,6 +177,30 @@ function createBoard(callback) {
       callback();
     });
 };
+
+function getBoards(callback) {
+  taabInstance.getBoards()
+    .then((res) => {
+      const boards = res.map((item) => {
+        return `\n|${item.id}|[ ${item.name} ]( ${item.url} )`;
+      });
+      console.log(res);
+      console.info(` ✅ [${res.length}] boards retrieved:\n\n${boards}`);
+      callback();
+    })
+    .catch((error) => {
+      console.error(error);
+      callback();
+    });
+};
+
+/** ----------------------
+  _    ___ ___ _____ ___ 
+ | |  |_ _/ __|_   _/ __|
+ | |__ | |\__ \ | | \__ \
+ |____|___|___/ |_| |___/
+                         
+---------------------- **/
 
 function createList(callback) {
   inquirer.prompt(questions.createList).then((answers) => {
@@ -150,27 +219,11 @@ function createList(callback) {
         callback();
       });
   });
-}
-
-function getBoards(callback) {
-  taabInstance.getBoards()
-    .then((res) => {
-      const boards = res.map((item) => {
-        return `\n|${item.id}|[ ${item.name} ]( ${item.url} )`;
-      });
-      console.log(res);
-      console.info(` ✅ [${res.length}] boards retrieved:\n\n${boards}`);
-      callback();
-    })
-    .catch((error) => {
-      console.error(error);
-      callback();
-    });
 };
 
 function getLists(callback) {
   inquirer.prompt(questions.getLists).then((answers) => {
-    taabInstance //595912dee6c8dde18caa02d8
+    taabInstance
       .getLists({
         idBoard: answers.boardId,
       })
@@ -183,7 +236,64 @@ function getLists(callback) {
         callback();
       });
   });
-}
+};
+
+/** -----------------------
+   ___   _   ___ ___  ___ 
+  / __| /_\ | _ \   \/ __|
+ | (__ / _ \|   / |) \__ \
+  \___/_/ \_\_|_\___/|___/
+                          
+----------------------- **/
+
+function createCard(callback) {
+  inquirer.prompt(questions.createCard).then((answers) => {
+    taabInstance
+      .createCard({
+        idList: answers.listId,
+        name: answers.listName,
+      })
+      .then((res) => {
+        console.log(res);
+        console.info(` ✅ list [ID: ${res.id}]`);
+        callback();
+      })
+      .catch((error) => {
+        console.error(error);
+        callback();
+      });
+  });
+};
+
+function getAllCards(callback) {
+  taabInstance
+    .getAllCards()
+    .then((res) => {
+      console.log(res);
+      callback();
+    })
+    .catch((error) => {
+      console.error(error);
+      callback();
+    });
+};
+
+function getCardsByList(callback) { // todo : write questions for getListCards
+  inquirer.prompt(questions.getListCards).then((answers) => {
+    taabInstance // 595912dee6c8dde18caa02d8
+      .getListCards({
+        idList: answers.listId,
+      })
+      .then((res) => {
+        console.log(res);
+        callback();
+      })
+      .catch((error) => {
+        console.error(error);
+        callback();
+      });
+  });
+};
 
 function getProfile(callback) {
   taabInstance.getProfile()

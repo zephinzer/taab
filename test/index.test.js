@@ -21,11 +21,15 @@ describe('taab', () => {
         'createList',
         'createCard',
         'getBoards',
-        'getCards',
+        'getAllCards',
+        'getBoardCards',
+        'getListCards',
+        'getLists',
         'getMember',
         'getOrganisations',
         'getOrganizations',
         'getProfile',
+        'verify',
       ]);
     });
   });
