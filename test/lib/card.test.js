@@ -49,10 +49,10 @@ describe('taab card', () => {
       createApiHandlerSpy.reset();
     });
 
-    it('throws an error if no arguments are specified', () => {
+    it('does not throw an error if no arguments are specified', () => {
       expect(() => {
         taabCard.queryAll();
-      }).to.throw();
+      }).to.not.throw();
     });
 
     it('calls the standard api handler creator', () => {
