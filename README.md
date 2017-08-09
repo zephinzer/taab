@@ -393,7 +393,7 @@ Apply the appropriate changes to `package.json` when you contribute
 
 ## Changelog
 ### 9th August 2017
-Published 0.5.1
+Published 0.5.2
 
 > Added examples (use `npm start` to run the basic example)
 
