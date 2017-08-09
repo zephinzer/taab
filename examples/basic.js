@@ -147,7 +147,8 @@ function createBoard(callback) {
     })
       .then((res) => {
         console.log(res);
-        console.info(` ✅ board ['${res.name}'] was created with description "${res.desc}" ( 👉🏽 ${res.url} || ${res.shortUrl})`);
+        const descriptionAndLink = `"${res.desc}" ( 👉🏽 ${res.url} || ${res.shortUrl})`;
+        console.info(` ✅ board ['${res.name}'] was created with description ${descriptionAndLink}`);
       })
       .catch((error) => {
         handleError(error);
