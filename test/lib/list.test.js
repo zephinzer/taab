@@ -52,19 +52,19 @@ describe('taab list', () => {
         createApiHandlerSpy.reset();
       });
 
-      it('throws an error if :idBoard is not specified', () => {
+      it('throws an error if :boardId is not specified', () => {
         expect(() => {
           taabList.query();
         }).to.throw();
       });
 
       it('calls the standard api handler creator', () => {
-        taabList.query({idBoard: 'expected_board_id'});
+        taabList.queryBoard({boardId: 'expected_board_id'});
         expect(apiHandler).to.be.calledOnce;
       });
 
       it('calls the correct trello endpoint', () => {
-        taabList.query({idBoard: 'expected_board_id'});
+        taabList.queryBoard({boardId: 'expected_board_id'});
         expect(createApiHandlerSpy).to.be.calledWith('get', '/boards/expected_board_id/lists');
       });
     });

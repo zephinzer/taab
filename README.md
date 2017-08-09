@@ -64,11 +64,17 @@ const taabInstance = taab.init(TRELLO_DEVELOPER_API_KEY, TRELLO_PERSONAL_TOKEN);
 Get started by using `taabInstance`!
 
 ## API Documentation
-### Static
+
+
+### Static Methods
+
+
+
 #### `.init()`
+
 ##### Arguments
-- :apiKey
-- :token
+- `:apiKey`
+- `:token`
 
 ###### apiKey
 The Developer API Key obtained from https://trello.com/app-key
@@ -76,7 +82,16 @@ The Developer API Key obtained from https://trello.com/app-key
 ###### token
 Your personal development token obtained from https://trello.com/1/authorize?expiration=never&scope=read,write,account&response_type=token&name=Server%20Token&key=`<Trello Developer API Key>`
 
-### Instance
+
+
+### Instance Methods
+
+
+
+### Boards
+
+- - -
+
 #### `.createBoard()`
 Creates a Board
 
@@ -109,28 +124,30 @@ taabInstance.createBoard({})
 ##### See More
 https://developers.trello.com/advanced-reference/board#post-1-boards
 
-#### `.createList()`
-Creates a List
+- - -
 
+#### `.getBoards()`
+Retrieves all boards belonging to yourself.
 ##### Arguments
-- `:options` : hash optionally containing the following keys:
-  - `name` *= `taabConst.defaults.listName`*
-  - `idBoard`
-  - `idListSource`
-  - `pos`
 
 ##### Example
 ```javascript
-taabInstance.createList({})
+taabInstance.getBoards()
   .then((results) => { console.info(results); })
   .catch((error) => { console.error(error); });
 ```
 
 ##### See More
-https://developers.trello.com/advanced-reference/list#post-1-lists
+https://developers.trello.com/v1.0/reference#membersidboards
 
-#### `.createList()`
-Creates a List
+- - -
+
+### Cards
+
+- - -
+
+#### `.createCard()`
+Creates a Card
 
 ##### Arguments
 - `:options` : hash optionally containing the following keys:
@@ -157,41 +174,149 @@ taabInstance.createList({})
 ##### See More
 https://developers.trello.com/advanced-reference/card#post-1-cards
 
-#### `.getBoards()`
-Retrieves all boards belonging to yourself.
-##### Arguments
+- - -
 
-##### Example
-```javascript
-taabInstance.getBoards()
-  .then((results) => { console.info(results); })
-  .catch((error) => { console.error(error); });
-```
-
-#### `.getCards()`
+#### `.getAllCards()`
 Retrievs all cards belonging to yourself.
 
 ##### Arguments
-None
+- `:options` : hash optionally containing the following keys:
+  - `actions` *= taabConst.defaults.cardActions,
+  - `attachments` *= taabConst.defaults.cardAttachments,
+  - `attachment_fields` *= taabConst.defaults.cardAttachmentFields
+  - `stickers` *= taabConst.defaults.cardStickers,
+  - `members` *= taabConst.defaults.cardMembers,
+  - `member_fields` *= taabConst.defaults.cardMemberFields
+  - `checkItemStates` *= taabConst.defaults.cardCheckItemStates,
+  - `checklists` *= taabConst.defaults.cardChecklists,
+  - `limit` *= taabConst.defaults.cardLimit,
+  - `since` *= taabConst.defaults.cardSince,
+  - `before` *= taabConst.defaults.cardBefore,
+  - `filter` *= taabConst.defaults.cardFilter,
+  - `fields` *= taabConst.defaults.cardFields,
 
 ##### Example
 ```javascript
-taabInstance.getCards()
+taabInstance.getAllCards()
   .then((results) => { console.info(results); })
   .catch((error) => { console.error(error); });
 ```
 
+##### See More
+https://developers.trello.com/advanced-reference/member#get-1-members-idmember-or-username-cards
+
+- - -
+
+#### `.getBoardCards()`
+Retrieves all cards belonging to a board.
+
+##### Arguments
+- `:options` : hash containing the following properties:
+  - `id` *required*
+  - `fields`
+
+##### Example
+```javascript
+taabInstance.getBoardCards({
+  id: '93CstY3zuTest'
+}).then((results) => { console.info(results); })
+  .catch((error) => { console.error(error); });
+```
+
+##### See More
+https://developers.trello.com/v1.0/reference#listsidboard
+
+- - -
+
+#### `.getListCards()`
+Retrieves all cards belonging to a list.
+
+##### Arguments
+- `:options` : hash containing the following properties:
+  - `id` *required*
+  - `fields`
+
+##### Example
+```javascript
+taabInstance.getListCards({
+  id: '93CstY3zuTest'
+}).then((results) => { console.info(results); })
+  .catch((error) => { console.error(error); });
+```
+
+##### See More
+https://developers.trello.com/v1.0/reference#listsidcards
+
+- - - 
+
+### Lists
+
+- - -
+
+#### `.createList()`
+Creates a List
+
+##### Arguments
+- `:options` : hash optionally containing the following keys:
+  - `name` *= `taabConst.defaults.listName`*
+  - `idBoard`
+  - `idListSource`
+  - `pos`
+
+##### Example
+```javascript
+taabInstance.createList({})
+  .then((results) => { console.info(results); })
+  .catch((error) => { console.error(error); });
+```
+
+##### See More
+https://developers.trello.com/advanced-reference/list#post-1-lists
+
+- - -
+
+#### `.getBoardLists()`
+Retrieves all lists from a board
+
+##### Arguments
+- `:options` : hash
+  - `idBoard` *required*
+
+##### Example
+```javascript
+taabInstance.getBoardLists({
+  boardId: '93DquTrsTEST'
+}).then((results) => { console.info(results); })
+  .catch((error) => { console.error(error); });
+```
+
+##### See More
+https://developers.trello.com/v1.0/reference#boardsboardidlists
+
+- - -
+
+### Utility
+
+- - -
+
 #### `.getMember()`
 Retrieves a member given a Trello user ID
+
 ##### Arguments
 - `:memberId` : Trello ID of the member
 
 ##### Example
 ```javascript
-taabInstance.getMember('3892e8asd7ea8bc231')
-  .then((results) => { console.info(results); })
+taabInstance.getMember({
+  memberId: '3892e8asd7ea8bc231'
+}).then((results) => { console.info(results); })
   .catch((error) => { console.error(error); });
 ```
+
+##### See More
+https://developers.trello.com/v1.0/reference#membersid
+
+- - -
 
 #### `.getProfile()`
 Retrieves your own profile.
@@ -206,6 +331,11 @@ taabInstance.getProfile()
   .catch((error) => { console.error(error); });
 ```
 
+##### See More
+
+
+- - -
+
 #### `.getOrganizations()`
 Retrieves your organisations.
 
@@ -219,6 +349,11 @@ taabInstance.getOrganizations()
   .catch((error) => { console.error(error); });
 ```
 
+##### See More
+https://developers.trello.com/v1.0/reference#membersidorganizations
+
+- - -
+
 #### `.verify()`
 Verifies that the correct key/token was provided to the instance.
 
@@ -231,6 +366,8 @@ taabInstance.verify()
   .then(() => { console.info('success'); })
   .catch((error) => { console.error('error'); });
 ```
+
+- - -
 
 ## SDLC
 ### Process
