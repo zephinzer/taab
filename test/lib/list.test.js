@@ -45,28 +45,28 @@ describe('taab list', () => {
         pos: 0,
       });
     });
+  });
 
-    context('query', () => {
-      beforeEach(() => {
-        apiHandler.reset();
-        createApiHandlerSpy.reset();
-      });
+  context('queryBoard', () => {
+    beforeEach(() => {
+      apiHandler.reset();
+      createApiHandlerSpy.reset();
+    });
 
-      it('throws an error if :boardId is not specified', () => {
-        expect(() => {
-          taabList.query();
-        }).to.throw();
-      });
+    it('throws an error if :boardId is not specified', () => {
+      expect(() => {
+        taabList.query();
+      }).to.throw();
+    });
 
-      it('calls the standard api handler creator', () => {
-        taabList.queryBoard({boardId: 'expected_board_id'});
-        expect(apiHandler).to.be.calledOnce;
-      });
+    it('calls the standard api handler creator', () => {
+      taabList.queryBoard({boardId: 'expected_board_id'});
+      expect(apiHandler).to.be.calledOnce;
+    });
 
-      it('calls the correct trello endpoint', () => {
-        taabList.queryBoard({boardId: 'expected_board_id'});
-        expect(createApiHandlerSpy).to.be.calledWith('get', '/boards/expected_board_id/lists');
-      });
+    it('calls the correct trello endpoint', () => {
+      taabList.queryBoard({boardId: 'expected_board_id'});
+      expect(createApiHandlerSpy).to.be.calledWith('get', '/boards/expected_board_id/lists');
     });
   });
 });

@@ -93,12 +93,12 @@ describe('taab card', () => {
     });
 
     it('calls the standard api handler creator', () => {
-      taabCard.queryBoard({id: 'id'});
+      taabCard.queryBoard({boardId: 'id'});
       expect(apiHandler).to.be.calledOnce;
     });
 
     it('calls the correct trello endpoint', () => {
-      taabCard.queryBoard({id: 'id'});
+      taabCard.queryBoard({boardId: 'id'});
       expect(createApiHandlerSpy).to.be.calledWith('get', '/boards/id/cards', {
       });
     });
@@ -117,12 +117,12 @@ describe('taab card', () => {
     });
 
     it('calls the standard api handler creator', () => {
-      taabCard.queryList({id: 'id'});
+      taabCard.queryList({listId: 'id'});
       expect(apiHandler).to.be.calledOnce;
     });
 
     it('calls the correct trello endpoint', () => {
-      taabCard.queryList({id: 'id'});
+      taabCard.queryList({listId: 'id'});
       expect(createApiHandlerSpy).to.be.calledWith('get', '/lists/id/cards', {
       });
     });

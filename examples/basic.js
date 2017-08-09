@@ -25,52 +25,11 @@ const questions = {
         'create-card',
         'get-all-cards',
         'get-cards-by-list',
+        'get-cards-by-board',
         'get-profile',
         'exit',
       ],
       message: 'What are we trying out today?',
-      name: 'action',
-      type: 'list',
-    },
-  ],
-  createList: [
-    {
-      type: 'input',
-      name: 'boardId',
-      message: 'Paste the board ID here',
-    },
-    {
-      type: 'input',
-      name: 'boardName',
-      message: 'What name shall we give it?',
-    },
-  ],
-  getLists: [
-    {
-      type: 'input',
-      name: 'boardId',
-      message: 'Paste the board ID here',
-    },
-  ],
-  createCard: [
-    {
-      type: 'input',
-      name: 'listId',
-      message: 'Paste the list ID here',
-    },
-    {
-      type: 'input',
-      name: 'listName',
-      message: 'What name shall we give it?',
-    },
-  ],
-  getCards: [
-    {
-      possibleActions: [
-        'all of my cards',
-        'cards belonging to a list',
-      ],
-      message: 'Choose the most applicable:',
       name: 'action',
       type: 'list',
     },
@@ -83,6 +42,17 @@ let taabInstance = null;
   getCredentials()
     .then(loopActionSelection);
 })();
+
+function handleError(error, message) {
+  console.error('⚠️️️⚠️️️⚠️️️ START');
+  console.error(error);
+  console.error('⚠️️️⚠️️️⚠️️️ END');
+  if(typeof message === 'string') {
+    console.error('- - -');
+    console.error(message);
+    console.error('- - -');
+  }
+}
 
 /** ---------------------
     _  _   _ _____ _  _ 
@@ -107,8 +77,7 @@ function getCredentials() {
         deferred.resolve();
       })
       .catch((error) => {
-        console.error(error);
-        console.error(' ❌ credentials invalid - try again...');
+        handleError(error, ' ❌ credentials invalid - try again...');
         process.env.TRELLO_API_KEY = null;
         process.env.TRELLO_TOKEN = null;
         getCredentials(onSuccess);
@@ -124,10 +93,11 @@ function loopActionSelection() {
       case 'create-board': createBoard(loopActionSelection); break;
       case 'get-boards': getBoards(loopActionSelection); break;
       case 'create-list': createList(loopActionSelection); break;
-      case 'get-lists': getLists(loopActionSelection); break;
+      case 'get-lists': getBoardLists(loopActionSelection); break;
       case 'create-card': createCard(loopActionSelection); break;
       case 'get-all-cards': getAllCards(loopActionSelection); break;
       case 'get-cards-by-list': getCardsByList(loopActionSelection); break;
+      case 'get-cards-by-board': getCardsByBoard(loopActionSelection); break;
       case 'get-profile': getProfile(loopActionSelection); break;
       case 'exit': process.exit(0); break;
       default:
@@ -137,7 +107,7 @@ function loopActionSelection() {
   });
 };
 
-function getCredentialsLoopTillSuccess(onSuccess) {
+function getCredentialsLoopTillSuccess(callback) {
   inquirer.prompt(questions.credentials)
     .then((answers) => {
       const {apiKey, token} = answers;
@@ -146,12 +116,11 @@ function getCredentialsLoopTillSuccess(onSuccess) {
       taabInstance.verify()
         .then(() => {
           console.info(' ✅ credentials valid');
-          onSuccess();
+          callback();
         })
         .catch((error) => {
-          console.error(error);
-          console.error(' ❌ credentials invalid - try again...');
-          getCredentials(onSuccess);
+          handleError(error, ' ❌ credentials invalid - try again...');
+          getCredentials(callback);
         });
     })
     .catch(console.error);
@@ -166,16 +135,25 @@ function getCredentialsLoopTillSuccess(onSuccess) {
 ---------------------------- **/                              
 
 function createBoard(callback) {
-  taabInstance.createBoard({})
-    .then((res) => {
-      console.log(res);
-      console.info(` ✅ board ['${res.name}'] was created with description "${res.desc}" ( 👉🏽 ${res.url} || ${res.shortUrl})`);
-      callback();
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'boardName',
+      message: 'What name shall we give it?',
+    },
+  ]).then((answers) => {
+    taabInstance.createBoard({
+      name: answers.boardName,
     })
-    .catch((error) => {
-      console.error(error);
-      callback();
-    });
+      .then((res) => {
+        console.log(res);
+        console.info(` ✅ board ['${res.name}'] was created with description "${res.desc}" ( 👉🏽 ${res.url} || ${res.shortUrl})`);
+      })
+      .catch((error) => {
+        handleError(error);
+      })
+      .finally(callback);
+  });
 };
 
 function getBoards(callback) {
@@ -186,12 +164,11 @@ function getBoards(callback) {
       });
       console.log(res);
       console.info(` ✅ [${res.length}] boards retrieved:\n\n${boards}`);
-      callback();
     })
     .catch((error) => {
-      console.error(error);
-      callback();
-    });
+      handleError(error);
+    })
+      .finally(callback);
 };
 
 /** ----------------------
@@ -203,7 +180,18 @@ function getBoards(callback) {
 ---------------------- **/
 
 function createList(callback) {
-  inquirer.prompt(questions.createList).then((answers) => {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'boardId',
+      message: 'Paste the board ID here',
+    },
+    {
+      type: 'input',
+      name: 'boardName',
+      message: 'What name shall we give it?',
+    },
+  ]).then((answers) => {
     taabInstance
       .createList({
         idBoard: answers.boardId,
@@ -212,29 +200,33 @@ function createList(callback) {
       .then((res) => {
         console.log(res);
         console.info(` ✅ list [ID: ${res.id}]`);
-        callback();
       })
       .catch((error) => {
-        console.error(error);
-        callback();
-      });
+        handleError(error);
+      })
+      .finally(callback);
   });
 };
 
-function getLists(callback) {
-  inquirer.prompt(questions.getLists).then((answers) => {
+function getBoardLists(callback) {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'boardId',
+      message: 'Paste the board ID here',
+    },
+  ]).then((answers) => {
     taabInstance
-      .getLists({
-        idBoard: answers.boardId,
+      .getBoardLists({
+        boardId: answers.boardId,
       })
       .then((res) => {
         console.log(res);
-        callback();
       })
       .catch((error) => {
-        console.error(error);
-        callback();
-      });
+        handleError(error);
+      })
+      .finally(callback);
   });
 };
 
@@ -247,7 +239,18 @@ function getLists(callback) {
 ----------------------- **/
 
 function createCard(callback) {
-  inquirer.prompt(questions.createCard).then((answers) => {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'listId',
+      message: 'Paste the list ID here',
+    },
+    {
+      type: 'input',
+      name: 'listName',
+      message: 'What name shall we give it?',
+    },
+  ]).then((answers) => {
     taabInstance
       .createCard({
         idList: answers.listId,
@@ -256,12 +259,11 @@ function createCard(callback) {
       .then((res) => {
         console.log(res);
         console.info(` ✅ list [ID: ${res.id}]`);
-        callback();
       })
       .catch((error) => {
-        console.error(error);
-        callback();
-      });
+        handleError(error);
+      })
+      .finally(callback);
   });
 };
 
@@ -270,39 +272,66 @@ function getAllCards(callback) {
     .getAllCards()
     .then((res) => {
       console.log(res);
-      callback();
     })
     .catch((error) => {
-      console.error(error);
-      callback();
-    });
+      handleError(error);
+    })
+    .finally(callback);
 };
 
-function getCardsByList(callback) { // todo : write questions for getListCards
-  inquirer.prompt(questions.getListCards).then((answers) => {
-    taabInstance // 595912dee6c8dde18caa02d8
+function getCardsByList(callback) {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'listId',
+      message: 'Paste the list ID here',
+    },
+  ]).then((answers) => {
+    taabInstance
       .getListCards({
-        idList: answers.listId,
+        listId: answers.listId,
       })
       .then((res) => {
         console.log(res);
-        callback();
       })
       .catch((error) => {
-        console.error(error);
-        callback();
-      });
+        handleError(error);
+      })
+      .finally(callback);
   });
 };
+
+function getCardsByBoard(callback) {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'boardId',
+      message: 'Paste the board ID here',
+    },
+  ]).then((answers) => {
+    taabInstance
+      .getBoardCards({
+        boardId: answers.boardId,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        handleError(error,
+          `${error.response.statusCode} - ${error.response.error.text}`
+        );
+      })
+      .finally(callback);
+  });
+}
 
 function getProfile(callback) {
   taabInstance.getProfile()
     .then((res) => {
       console.info(res);
-      callback();
     })
     .catch((error) => {
-      console.error(error);
-      callback();
-    });
+      handleError(error);
+    })
+    .finally(callback);
 };
