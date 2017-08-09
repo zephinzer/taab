@@ -392,6 +392,21 @@ Apply the appropriate changes to `package.json` when you contribute
 - Add it to the changelog below as well for the *next* version. Ie if the current version is 1.0.0 when you make the change, list it under 1.0.
 
 ## Changelog
+### 9th August 2017
+Published 0.5.1
+
+> Added examples (use `npm start` to run the basic example)
+
+➕ ~instance.getCards()~ instance.getAllCards()
+
+➕ instance.getBoardCards()
+
+➕ instance.getListCards()
+
+➕ instance.getBoardLists()
+
+➕ instance.createBoard()
+
 ### 3rd July 2017
 Published 0.3.0.
 
