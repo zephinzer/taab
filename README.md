@@ -212,13 +212,13 @@ Retrieves all cards belonging to a board.
 
 ##### Arguments
 - `:options` : hash containing the following properties:
-  - `id` *required*
+  - `boardId` *required*
   - `fields`
 
 ##### Example
 ```javascript
 taabInstance.getBoardCards({
-  id: '93CstY3zuTest'
+  boardId: '93CstY3zuTest'
 }).then((results) => { console.info(results); })
   .catch((error) => { console.error(error); });
 ```
@@ -233,13 +233,13 @@ Retrieves all cards belonging to a list.
 
 ##### Arguments
 - `:options` : hash containing the following properties:
-  - `id` *required*
+  - `listId` *required*
   - `fields`
 
 ##### Example
 ```javascript
 taabInstance.getListCards({
-  id: '93CstY3zuTest'
+  listId: '93CstY3zuTest'
 }).then((results) => { console.info(results); })
   .catch((error) => { console.error(error); });
 ```
