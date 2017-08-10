@@ -1,5 +1,5 @@
 # Trello-As-A-Backend
-TAAB is a tool to use Trello like a NoSQL back-end by using Boards as the databases, Lists as tables and Cards as rows. I imagine this is useful for creating customised Trello workflows which will be contextualised when accessing through your own interface, yet viewable by all through Trello itself. Feel free to fork & contribute.
+TAAB is a tool to use Trello like a NoSQL back-end by using Boards as the databases, Lists as tables and Cards as rows. I imagine this is useful for creating customised Trello workflows which will be contextualised when accessing through your own interface, yet viewable by all through Trello itself. Feel free to fork & contribute. My progress can be tracked at this Trello board: [https://trello.com/b/KqOzXTWL/taab-roadmap](https://trello.com/b/KqOzXTWL/taab-roadmap). Feel free to request for access!
 
 [![Build Status](https://travis-ci.org/zephinzer/taab.svg?branch=master)](https://travis-ci.org/zephinzer/taab)
 [![Dependency Status](https://david-dm.org/zephinzer/taab.svg)](https://david-dm.org/zephinzer/taab.svg)
