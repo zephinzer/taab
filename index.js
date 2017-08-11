@@ -16,13 +16,14 @@ TAAB.init = function(developerApiKey, personalToken) {
 };
 
 TAAB.prototype.createBoard = taabBoard.create;
-TAAB.prototype.getBoards = taabBoard.query;
 TAAB.prototype.createCard = taabCard.create;
-TAAB.prototype.getAllCards = taabCard.queryAll;
-TAAB.prototype.getBoardCards = taabCard.queryBoard;
-TAAB.prototype.getListCards = taabCard.queryList;
 TAAB.prototype.createList = taabList.create;
+TAAB.prototype.getAllCards = taabCard.queryAll;
+TAAB.prototype.getBoards = taabBoard.query;
+TAAB.prototype.getBoardCards = taabCard.queryBoard;
 TAAB.prototype.getBoardLists = taabList.queryBoard;
+TAAB.prototype.getCard = taabCard.get;
+TAAB.prototype.getListCards = taabCard.queryList;
 
 /**
  * @see https://developers.trello.com/v1.0/reference#membersid

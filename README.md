@@ -176,24 +176,61 @@ https://developers.trello.com/advanced-reference/card#post-1-cards
 
 - - -
 
+#### `.getCard()`
+Retrieves a card given a `:cardId`.
+
+##### Arguments
+- `:options` : hash
+  - `cardId` : ***required***
+  - `fields`
+  - `actions`
+  - `attachments`
+  - `attachment_fields`
+  - `members`
+  - `member_fields`
+  - `membersVoted`
+  - `memberVoted_fields`
+  - `checkItemStates`
+  - `checklists`
+  - `checklist_fields`
+  - `board`
+  - `board_fields`
+  - `list`
+  - `pluginData`
+  - `stickers`
+  - `sticker_fields`
+
+##### Example
+```javascript
+taabInstance.getCard({
+  cardId: '1234abcdeTEST',
+}).then((results) => { console.info(results); })
+  .catch((error) => { console.error(error); });
+```
+
+##### See More
+https://developers.trello.com/v1.0/reference#cardsid
+
+- - -
+
 #### `.getAllCards()`
 Retrievs all cards belonging to yourself.
 
 ##### Arguments
 - `:options` : hash optionally containing the following keys:
-  - `actions` *= taabConst.defaults.cardActions,
-  - `attachments` *= taabConst.defaults.cardAttachments,
-  - `attachment_fields` *= taabConst.defaults.cardAttachmentFields
-  - `stickers` *= taabConst.defaults.cardStickers,
-  - `members` *= taabConst.defaults.cardMembers,
-  - `member_fields` *= taabConst.defaults.cardMemberFields
-  - `checkItemStates` *= taabConst.defaults.cardCheckItemStates,
-  - `checklists` *= taabConst.defaults.cardChecklists,
-  - `limit` *= taabConst.defaults.cardLimit,
-  - `since` *= taabConst.defaults.cardSince,
-  - `before` *= taabConst.defaults.cardBefore,
-  - `filter` *= taabConst.defaults.cardFilter,
-  - `fields` *= taabConst.defaults.cardFields,
+  - `actions`
+  - `attachments`
+  - `attachment_fields`
+  - `stickers`
+  - `members`
+  - `member_fields`
+  - `checkItemStates`
+  - `checklists`
+  - `limit`
+  - `since`
+  - `before`
+  - `filter`
+  - `fields`
 
 ##### Example
 ```javascript
@@ -212,7 +249,7 @@ Retrieves all cards belonging to a board.
 
 ##### Arguments
 - `:options` : hash containing the following properties:
-  - `boardId` *required*
+  - `boardId` : ***required***
   - `fields`
 
 ##### Example
@@ -233,7 +270,7 @@ Retrieves all cards belonging to a list.
 
 ##### Arguments
 - `:options` : hash containing the following properties:
-  - `listId` *required*
+  - `listId` ***required***
   - `fields`
 
 ##### Example
@@ -392,6 +429,11 @@ Apply the appropriate changes to `package.json` when you contribute
 - Add it to the changelog below as well for the *next* version. Ie if the current version is 1.0.0 when you make the change, list it under 1.0.
 
 ## Changelog
+### 11th August 2017
+Published 0.6.0
+
+➕ instance.getCard()
+
 ### 9th August 2017
 Published 0.5.2
 

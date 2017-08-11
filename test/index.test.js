@@ -24,6 +24,7 @@ describe('taab', () => {
         'getAllCards',
         'getBoardCards',
         'getBoardLists',
+        'getCard',
         'getListCards',
         'getMember',
         'getOrganisations',

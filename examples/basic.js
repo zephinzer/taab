@@ -23,6 +23,7 @@ const questions = {
         'create-list',
         'get-lists',
         'create-card',
+        'get-card',
         'get-all-cards',
         'get-cards-by-list',
         'get-cards-by-board',
@@ -95,13 +96,14 @@ function loopActionSelection() {
       case 'create-list': createList(loopActionSelection); break;
       case 'get-lists': getBoardLists(loopActionSelection); break;
       case 'create-card': createCard(loopActionSelection); break;
+      case 'get-card': getCard(loopActionSelection); break;
       case 'get-all-cards': getAllCards(loopActionSelection); break;
       case 'get-cards-by-list': getCardsByList(loopActionSelection); break;
       case 'get-cards-by-board': getCardsByBoard(loopActionSelection); break;
       case 'get-profile': getProfile(loopActionSelection); break;
       case 'exit': process.exit(0); break;
       default:
-        console.info('An invalid action was selected.');
+        console.error('An invalid action was selected.');
         loopActionSelection();
     }
   });
@@ -150,9 +152,7 @@ function createBoard(callback) {
         const descriptionAndLink = `"${res.desc}" ( 👉🏽 ${res.url} || ${res.shortUrl})`;
         console.info(` ✅ board ['${res.name}'] was created with description ${descriptionAndLink}`);
       })
-      .catch((error) => {
-        handleError(error);
-      })
+      .catch(handleError)
       .finally(callback);
   });
 };
@@ -166,10 +166,8 @@ function getBoards(callback) {
       console.log(res);
       console.info(` ✅ [${res.length}] boards retrieved:\n\n${boards}`);
     })
-    .catch((error) => {
-      handleError(error);
-    })
-      .finally(callback);
+    .catch(handleError)
+    .finally(callback);
 };
 
 /** ----------------------
@@ -268,15 +266,33 @@ function createCard(callback) {
   });
 };
 
+function getCard(callback) {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'cardId',
+      message: 'Paste the card ID here',
+    },
+  ]).then((answers) => {
+    taabInstance
+      .getCard({
+        cardId: answers.cardId,
+      })
+      .then((res) => {
+        console.info(res);
+      })
+      .catch(handleError)
+      .finally(callback);
+  });
+}
+
 function getAllCards(callback) {
   taabInstance
     .getAllCards()
     .then((res) => {
       console.log(res);
     })
-    .catch((error) => {
-      handleError(error);
-    })
+    .catch(handleError)
     .finally(callback);
 };
 
@@ -295,9 +311,7 @@ function getCardsByList(callback) {
       .then((res) => {
         console.log(res);
       })
-      .catch((error) => {
-        handleError(error);
-      })
+      .catch(handleError)
       .finally(callback);
   });
 };
@@ -331,8 +345,6 @@ function getProfile(callback) {
     .then((res) => {
       console.info(res);
     })
-    .catch((error) => {
-      handleError(error);
-    })
+    .catch(handleError)
     .finally(callback);
 };

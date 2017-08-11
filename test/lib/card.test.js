@@ -43,6 +43,25 @@ describe('taab card', () => {
     });
   });
 
+  context('get', () => {
+    beforeEach(() => {
+      apiHandler.reset();
+      createApiHandlerSpy.reset();
+    });
+
+    it('throws an error if no arguments are specified', () => {
+      expect(() => {
+        taabCard.get();
+      }).to.throw();
+    });
+
+    it('throws an error if :cardId is not specified', () => {
+      expect(() => {
+        taabCard.get({});
+      }).to.throw();
+    });
+  });
+
   context('queryAll', () => {
     beforeEach(() => {
       apiHandler.reset();
@@ -63,19 +82,19 @@ describe('taab card', () => {
     it('calls the correct trello endpoint', () => {
       taabCard.queryAll({});
       expect(createApiHandlerSpy).to.be.calledWith('get', '/members/me/cards', {
-        actions: taabConst.defaults.cardActions,
-        attachments: taabConst.defaults.cardAttachments,
-        attachment_fields: taabConst.defaults.cardAttachmentFields, // eslint-disable-line camelcase
-        stickers: taabConst.defaults.cardStickers,
-        members: taabConst.defaults.cardMembers,
-        member_fields: taabConst.defaults.cardMemberFields, // eslint-disable-line camelcase
-        checkItemStates: taabConst.defaults.cardCheckItemStates,
-        checklists: taabConst.defaults.cardChecklists,
-        limit: taabConst.defaults.cardLimit,
-        since: taabConst.defaults.cardSince,
-        before: taabConst.defaults.cardBefore,
-        filter: taabConst.defaults.cardFilter,
-        fields: taabConst.defaults.cardFields,
+        actions: taabConst.C.ALL,
+        attachments: true,
+        attachment_fields: taabConst.C.ALL, // eslint-disable-line camelcase
+        stickers: true,
+        members: true,
+        member_fields: taabConst.C.ALL, // eslint-disable-line camelcase
+        checkItemStates: true,
+        checklists: taabConst.C.ALL,
+        limit: 100,
+        since: null,
+        before: null,
+        filter: 'visible',
+        fields: taabConst.C.ALL,
       });
     });
   });
