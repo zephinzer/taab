@@ -505,52 +505,35 @@ Apply the appropriate changes to `package.json` when you contribute
 
 ## Changelog
 ### 22nd August 2017
-Published 0.7.0
-
-➕ instance.deleteBoard()
-➕ instance.getBoard()
+Published 0.7.0  
+➕ instance.deleteBoard()  
+➕ instance.getBoard()  
 
 ### 11th August 2017
-Published 0.6.0
-
-➕ instance.getCard()
+Published 0.6.0  
+➕ instance.getCard()  
 
 ### 9th August 2017
 Published 0.5.2
 
-> Added examples (use `npm start` to run the basic example)
-
-➕ ~instance.getCards()~ instance.getAllCards()
-
-➕ instance.getBoardCards()
-
-➕ instance.getListCards()
-
-➕ instance.getBoardLists()
-
-➕ instance.createBoard()
+> Added examples (use `npm start` to run the basic example)  
+➕ ~instance.getCards()~ instance.getAllCards()  
+➕ instance.getBoardCards()  
+➕ instance.getListCards()  
+➕ instance.getBoardLists()  
+➕ instance.createBoard()  
 
 ### 3rd July 2017
-Published 0.3.0.
+Published 0.3.0.  
+➕ instance.verify()  
+➕ instance.createCard()  
+➕ instance.createList()  
 
-➕ instance.verify()
-
-➕ instance.createCard()
-
-➕ instance.createList()
-
-Published 0.2.0.
-
-➕ static.init()
-
-➕ instance.getMember()
-
-➕ instance.getProfile()
-
-➕ instance.getBoards()
-
-➕ instance.getOrganisations()
-
-➕ instance.getOrganizations()
-
+Published 0.2.0.  
+➕ static.init()  
+➕ instance.getMember()  
+➕ instance.getProfile()  
+➕ instance.getBoards()  
+➕ instance.getOrganisations()  
+➕ instance.getOrganizations()  
 ➕ instance.getCards()
