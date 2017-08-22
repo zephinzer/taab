@@ -483,12 +483,12 @@ To run the examples, execute the following command:
 ```
 
 ### General Task Checklist
-☐ Add changes to `./lib/*.js`
-☐ Add relevant tests into `./test`
-☐ Add example usage in `./examples`
-☐ Change README.md to reflect modifications
-☐ Bump minor version number for non-breaking changes
-☐ Bump major version number ofr breaking changes
+☐ Add changes to `./lib/*.js`  
+☐ Add relevant tests into `./test`  
+☐ Add example usage in `./examples`  
+☐ Change README.md to reflect modifications  
+☐ Bump minor version number for non-breaking changes  
+☐ Bump major version number ofr breaking changes  
 
 ### Versioning
 We follow [`semver`](http://semver.org/) which means:
