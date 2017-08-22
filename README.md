@@ -126,9 +126,45 @@ https://developers.trello.com/advanced-reference/board#post-1-boards
 
 - - -
 
+#### `.getBoard()`
+Retrieves the board identified by `:boardId`.
+
+##### Arguments
+- `:options` : hash containing the following keys:
+  - `:boardId` : ID of board ***required***
+  - `:actions`
+  - `:boardStars`
+  - `:cards`
+  - `:card_pluginData`
+  - `:checklists`
+  - `:fields`
+  - `:labels`
+  - `:lists`
+  - `:members`
+  - `:memberships`
+  - `:membersInvited`
+  - `:membersInvited_fields`
+  - `:pluginData`
+  - `:organization`
+  - `:organization_pluginData`
+  - `:myPrefs`
+
+##### Examples
+```javascript
+taabInstance.getBoard({boardId: 'BOARD_ID'})
+  .then((results) => { console.info(results); })
+  .catch((error) => { console.error(error); });
+```
+
+##### See More
+https://developers.trello.com/v1.0/reference#boardsboardid-1
+
+- - -
+
 #### `.getBoards()`
 Retrieves all boards belonging to yourself.
 ##### Arguments
+None.
 
 ##### Example
 ```javascript
@@ -150,7 +186,7 @@ https://developers.trello.com/v1.0/reference#membersidboards
 Creates a Card
 
 ##### Arguments
-- `:options` : hash optionally containing the following keys:
+- `:options` : hash containing the following keys:
   - `name` *= `taabConst.defaults.cardName`*
   - `desc` *= `taabConst.defaults.cardDescription`*
   - `pos` *= `'top'`*
@@ -409,11 +445,22 @@ taabInstance.verify()
 ## SDLC
 ### Process
 1. Fork this repository
-2. Make your changes
-3. Run `npm run eslint`
-4. Run `npm test`
-5. Merge into your `master` branch and create a Merge Request
-6. On passing of the Travis pipeline, we can merge it in.
+2. See Trello board @ https://trello.com/b/KqOzXTWL/taab-roadmap
+3. Pick an item from the Feature List and move it to Work In Progress
+4. Make your changes/additions
+5. If reasonable to do so, squash your commits with `git rebase HEAD~<N>` where `N` is the number of commits in your change/addition (makes it easier to see what was changed).
+6. Run `npm run eslint`
+7. Run `npm test`
+8. Merge into your `master` branch and create a Merge Request
+9. On passing of the pipeline on Travis, I'll merge it in
+
+### General Task Checklist
+☐ Add changes to `./lib/*.js`
+☐ Add relevant tests into `./test`
+☐ Add example usage in `./examples`
+☐ Change README.md to reflect modifications
+☐ Bump minor version number for non-breaking changes
+☐ Bump major version number ofr breaking changes
 
 ### Versioning
 We follow [`semver`](http://semver.org/) which means:
