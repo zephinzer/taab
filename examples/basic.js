@@ -20,6 +20,7 @@ const questions = {
       choices: [
         'create-board',
         'get-boards',
+        'get-board',
         'create-list',
         'get-lists',
         'create-card',
@@ -93,6 +94,7 @@ function loopActionSelection() {
     switch (action) {
       case 'create-board': createBoard(loopActionSelection); break;
       case 'get-boards': getBoards(loopActionSelection); break;
+      case 'get-board': getBoard(loopActionSelection); break;
       case 'create-list': createList(loopActionSelection); break;
       case 'get-lists': getBoardLists(loopActionSelection); break;
       case 'create-card': createCard(loopActionSelection); break;
@@ -168,6 +170,28 @@ function getBoards(callback) {
     })
     .catch(handleError)
     .finally(callback);
+};
+
+function getBoard(callback) {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'boardId',
+      message: 'Paste the board ID here',
+    },
+  ]).then((answers) => {
+    const {boardId} = answers;
+    taabInstance
+      .getBoard({
+        boardId,
+      })
+      .then((res) => {
+        console.log(res);
+        console.info(` ✅`);
+      })
+      .catch(handleError)
+      .finally(callback);
+  });
 };
 
 /** ----------------------

@@ -19,6 +19,7 @@ TAAB.prototype.createBoard = taabBoard.create;
 TAAB.prototype.createCard = taabCard.create;
 TAAB.prototype.createList = taabList.create;
 TAAB.prototype.getAllCards = taabCard.queryAll;
+TAAB.prototype.getBoard = taabBoard.get;
 TAAB.prototype.getBoards = taabBoard.query;
 TAAB.prototype.getBoardCards = taabCard.queryBoard;
 TAAB.prototype.getBoardLists = taabList.queryBoard;

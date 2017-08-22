@@ -1,6 +1,7 @@
 const taabConst = require('../../lib/const');
 const rewire = require('rewire');
 const taabBoard = rewire('../../lib/board');
+const taabUtils = require('../../lib/utils');
 
 const createApiHandlerSpy = sinon.spy();
 const apiHandler = sinon.spy();
@@ -10,6 +11,7 @@ const mockTaabUtils = {
     createApiHandlerSpy(method, uri, params);
     return apiHandler;
   },
+  createMissingArgumentMessage: taabUtils.createMissingArgumentMessage,
 };
 
 taabBoard.__set__('taabUtils', mockTaabUtils);
@@ -50,6 +52,51 @@ describe('taab board', () => {
         prefs_cardCovers: undefined, // eslint-disable-line camelcase
         prefs_background: taabConst.defaults.backgroundColor, // eslint-disable-line camelcase
         prefs_cardAging: undefined, // eslint-disable-line camelcase
+      });
+    });
+  });
+
+  context('get', () => {
+    beforeEach(() => {
+      apiHandler.reset();
+      createApiHandlerSpy.reset();
+    });
+
+    it('throws an error if :boardId is not specified', () => {
+      expect(() => {
+        taabBoard.get();
+      }).to.throw();
+    });
+
+    it('calls the standard api handler creator', () => {
+      taabBoard.get({
+        boardId: ':boardId',
+      });
+      expect(apiHandler).to.be.calledOnce;
+    });
+
+    it('calls the correct trello endpoint', () => {
+      taabBoard.get({
+        boardId: ':boardId',
+      });
+      expect(createApiHandlerSpy).to.be.calledWith('get', '/boards/:boardId', {
+        actions: true,
+        boardStars: 'mine',
+        card_pluginData: true,
+        cards: 'none',
+        checklists: 'none',
+        fields: 'all',
+        labels: null,
+        lists: true,
+        members: true,
+        membersInvited: true,
+        membersInvited_fields: 'all',
+        memberships: true,
+        myPrefs: false,
+        organization: true,
+        organization_pluginData: true,
+        pluginData: true,
+        tags: '',
       });
     });
   });
