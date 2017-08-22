@@ -49,9 +49,9 @@ myProject.move(
 Install TAAB by `npm` or `yarn`:
 
 ```bash
-# npm install taab
-# /
-# yarn add taab
+#> npm install taab
+## /or/
+#> yarn add taab
 ```
 
 Initialize the module:
@@ -175,6 +175,27 @@ taabInstance.getBoards()
 
 ##### See More
 https://developers.trello.com/v1.0/reference#membersidboards
+
+- - -
+
+#### `.deleteBoard()`
+Closes the board specified by ID :boardId
+
+##### Arguments
+- `:options` : hash containing keys as follows:
+  - `:boardId` : ID of board to close
+
+##### Example
+```javascript
+taabInstance.deleteBoard({boardId: 'BOARD_ID'})
+  .then((results) => { console.info(results); })
+  .catch((error) => { console.error(error); });
+```
+
+##### See More
+https://developers.trello.com/v1.0/reference#idnext
+
+- - -
 
 - - -
 
@@ -454,6 +475,13 @@ taabInstance.verify()
 8. Merge into your `master` branch and create a Merge Request
 9. On passing of the pipeline on Travis, I'll merge it in
 
+### Examples
+To run the examples, execute the following command:
+
+```bash
+#> npm start
+```
+
 ### General Task Checklist
 ☐ Add changes to `./lib/*.js`
 ☐ Add relevant tests into `./test`
@@ -476,6 +504,12 @@ Apply the appropriate changes to `package.json` when you contribute
 - Add it to the changelog below as well for the *next* version. Ie if the current version is 1.0.0 when you make the change, list it under 1.0.
 
 ## Changelog
+### 22nd August 2017
+Published 0.7.0
+
+➕ instance.deleteBoard()
+➕ instance.getBoard()
+
 ### 11th August 2017
 Published 0.6.0
 

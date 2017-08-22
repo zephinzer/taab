@@ -21,6 +21,7 @@ const questions = {
         'create-board',
         'get-boards',
         'get-board',
+        'delete-board (close)',
         'create-list',
         'get-lists',
         'create-card',
@@ -95,6 +96,7 @@ function loopActionSelection() {
       case 'create-board': createBoard(loopActionSelection); break;
       case 'get-boards': getBoards(loopActionSelection); break;
       case 'get-board': getBoard(loopActionSelection); break;
+      case 'delete-board (close)': deleteBoard(loopActionSelection); break;
       case 'create-list': createList(loopActionSelection); break;
       case 'get-lists': getBoardLists(loopActionSelection); break;
       case 'create-card': createCard(loopActionSelection); break;
@@ -163,7 +165,7 @@ function getBoards(callback) {
   taabInstance.getBoards()
     .then((res) => {
       const boards = res.map((item) => {
-        return `\n|${item.id}|[ ${item.name} ]( ${item.url} )`;
+        return `\n${item.id} [ ${item.name} ](${item.url})${item.closed?' - CLOSED':''}`;
       });
       console.log(res);
       console.info(` ✅ [${res.length}] boards retrieved:\n\n${boards}`);
@@ -183,6 +185,28 @@ function getBoard(callback) {
     const {boardId} = answers;
     taabInstance
       .getBoard({
+        boardId,
+      })
+      .then((res) => {
+        console.log(res);
+        console.info(` ✅`);
+      })
+      .catch(handleError)
+      .finally(callback);
+  });
+};
+
+function deleteBoard(callback) {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'boardId',
+      message: 'Paste the board ID here',
+    },
+  ]).then((answers) => {
+    const {boardId} = answers;
+    taabInstance
+      .deleteBoard({
         boardId,
       })
       .then((res) => {

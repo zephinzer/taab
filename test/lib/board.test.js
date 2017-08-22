@@ -56,6 +56,37 @@ describe('taab board', () => {
     });
   });
 
+  context('deleteById', () => {
+    beforeEach(() => {
+      apiHandler.reset();
+      createApiHandlerSpy.reset();
+    });
+
+    it('throws an error if :boardId is not specified', () => {
+      expect(() => { taabBoard.deleteById(); }).to.throw();
+      expect(() => { taabBoard.deleteById({}); }).to.throw();
+    });
+
+    it('calls the standard api handler creator', () => {
+      taabBoard.deleteById({
+        boardId: ':boardId',
+      });
+      expect(apiHandler).to.be.calledOnce;
+    });
+
+    it('calls the correct trello endpoint', () => {
+      taabBoard.deleteById({
+        boardId: ':boardId',
+      });
+      expect(createApiHandlerSpy).to.be.calledWith(
+        'put',
+        '/boards/:boardId/closed', {
+          value: true,
+        }
+      );
+    });
+  });
+
   context('get', () => {
     beforeEach(() => {
       apiHandler.reset();
@@ -63,9 +94,8 @@ describe('taab board', () => {
     });
 
     it('throws an error if :boardId is not specified', () => {
-      expect(() => {
-        taabBoard.get();
-      }).to.throw();
+      expect(() => { taabBoard.get(); }).to.throw();
+      expect(() => { taabBoard.get({}); }).to.throw();
     });
 
     it('calls the standard api handler creator', () => {

@@ -1,6 +1,6 @@
 {
   "name": "taab",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Use Trello as a back-end!",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,12 @@
   "keywords": [
     "trello",
     "api",
-    "backend"
+    "wrapper",
+    "backend",
+    "board",
+    "card",
+    "list",
+    "experimental"
   ],
   "author": "zephinzer",
   "license": "MIT",
