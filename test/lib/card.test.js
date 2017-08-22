@@ -1,6 +1,7 @@
 const taabConst = require('../../lib/const');
 const rewire = require('rewire');
 const taabCard = rewire('../../lib/card');
+const taabUtils = require('../../lib/utils');
 
 const createApiHandlerSpy = sinon.spy();
 const apiHandler = sinon.spy();
@@ -10,6 +11,7 @@ const mockTaabUtils = {
     createApiHandlerSpy(method, uri, params);
     return apiHandler;
   },
+  createMissingArgumentMessage: taabUtils.createMissingArgumentMessage,
 };
 
 taabCard.__set__('taabUtils', mockTaabUtils);
