@@ -524,6 +524,10 @@ Apply the appropriate changes to `package.json` when you contribute
 - Add it to the changelog below as well for the *next* version. Ie if the current version is 1.0.0 when you make the change, list it under 1.0.
 
 ## Changelog
+### 23rd August 2017
+Published 0.8.1  
+➕ instance.getList()  
+
 ### 22nd August 2017
 Published 0.7.1  
 ➕ instance.deleteBoard()  
