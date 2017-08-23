@@ -26,6 +26,7 @@ TAAB.prototype.getBoardCards = taabCard.queryBoard;
 TAAB.prototype.getBoardLists = taabList.queryBoard;
 TAAB.prototype.getCard = taabCard.get;
 TAAB.prototype.getListCards = taabCard.queryList;
+TAAB.prototype.getList = taabList.get;
 
 /**
  * @see https://developers.trello.com/v1.0/reference#membersid

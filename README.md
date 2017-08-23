@@ -131,23 +131,23 @@ Retrieves the board identified by `:boardId`.
 
 ##### Arguments
 - `:options` : hash containing the following keys:
-  - `:boardId` : ID of board ***required***
-  - `:actions`
-  - `:boardStars`
-  - `:cards`
-  - `:card_pluginData`
-  - `:checklists`
-  - `:fields`
-  - `:labels`
-  - `:lists`
-  - `:members`
-  - `:memberships`
-  - `:membersInvited`
-  - `:membersInvited_fields`
-  - `:pluginData`
-  - `:organization`
-  - `:organization_pluginData`
-  - `:myPrefs`
+  - `boardId` : ID of board ***required***
+  - `actions`
+  - `boardStars`
+  - `cards`
+  - `card_pluginData`
+  - `checklists`
+  - `fields`
+  - `labels`
+  - `lists`
+  - `members`
+  - `memberships`
+  - `membersInvited`
+  - `membersInvited_fields`
+  - `pluginData`
+  - `organization`
+  - `organization_pluginData`
+  - `myPrefs`
 
 ##### Examples
 ```javascript
@@ -389,6 +389,26 @@ https://developers.trello.com/v1.0/reference#boardsboardidlists
 
 - - -
 
+#### `.getList()`
+
+##### Arguments
+- `:options` : hash
+  - `listId` ***required***
+  - `fields`
+
+##### Example
+```javascript
+taabInstance.getList({
+  listId: '8faASd938DS13w'
+}).then((results) => { console.info(results); })
+  .catch((error) => { console.error(error); });
+```
+
+##### See More
+https://developers.trello.com/v1.0/reference#listsid
+
+- - -
+
 ### Utility
 
 - - -
@@ -505,7 +525,7 @@ Apply the appropriate changes to `package.json` when you contribute
 
 ## Changelog
 ### 22nd August 2017
-Published 0.7.0  
+Published 0.7.1  
 ➕ instance.deleteBoard()  
 ➕ instance.getBoard()  
 

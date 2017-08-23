@@ -24,6 +24,7 @@ const questions = {
         'delete-board (close)',
         'create-list',
         'get-lists',
+        'get-list',
         'create-card',
         'get-card',
         'get-all-cards',
@@ -99,6 +100,7 @@ function loopActionSelection() {
       case 'delete-board (close)': deleteBoard(loopActionSelection); break;
       case 'create-list': createList(loopActionSelection); break;
       case 'get-lists': getBoardLists(loopActionSelection); break;
+      case 'get-list': getList(loopActionSelection); break;
       case 'create-card': createCard(loopActionSelection); break;
       case 'get-card': getCard(loopActionSelection); break;
       case 'get-all-cards': getAllCards(loopActionSelection); break;
@@ -270,12 +272,30 @@ function getBoardLists(callback) {
       .then((res) => {
         console.log(res);
       })
-      .catch((error) => {
-        handleError(error);
-      })
+      .catch(handleError)
       .finally(callback);
   });
 };
+
+function getList(callback) {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'listId',
+      message: 'Paste the list ID here',
+    },
+  ]).then((answers) => {
+    taabInstance
+      .getList({
+        listId: answers.listId,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(handleError)
+      .finally(callback);
+  });
+}
 
 /** -----------------------
    ___   _   ___ ___  ___ 

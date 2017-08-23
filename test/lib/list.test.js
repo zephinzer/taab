@@ -49,6 +49,30 @@ describe('taab list', () => {
     });
   });
 
+  context('get', () => {
+    beforeEach(() => {
+      apiHandler.reset();
+      createApiHandlerSpy.reset();
+    });
+
+    it('throws an error if :listId is not specified', () => {
+      expect(() => { taabList.get(); }).to.throw();
+      expect(() => { taabList.get({}); }).to.throw();
+    });
+
+    it('calls the standard api handler creator', () => {
+      taabList.get({listId: 'expected_list_id'});
+      expect(apiHandler).to.be.calledOnce;
+    });
+
+    it('calls the correct trello endpoint', () => {
+      taabList.get({listId: 'expected_list_id'});
+      expect(createApiHandlerSpy).to.be.calledWith('get', '/lists/expected_list_id', {
+        fields: undefined,
+      });
+    });
+  });
+
   context('queryBoard', () => {
     beforeEach(() => {
       apiHandler.reset();
