@@ -369,6 +369,26 @@ https://developers.trello.com/advanced-reference/list#post-1-lists
 
 - - -
 
+#### `.deleteList()`
+Closes a List
+
+##### Arguments
+- `:options` : hash of arguments
+  - `listId` ***\*required***
+
+##### Example
+```javascript
+taabInstance.deleteList({
+  listId: '1234567890abced',
+}).then((results) => { console.info(results); })
+  .catch((error) => { console.error(error); });
+```
+
+##### See More
+https://developers.trello.com/v1.0/reference#listsid-1
+
+- - -
+
 #### `.getBoardLists()`
 Retrieves all lists from a board
 
@@ -524,6 +544,10 @@ Apply the appropriate changes to `package.json` when you contribute
 - Add it to the changelog below as well for the *next* version. Ie if the current version is 1.0.0 when you make the change, list it under 1.0.
 
 ## Changelog
+### 25th August 2017
+Published 0.9.0  
+➕ instance.deleteList()  
+
 ### 23rd August 2017
 Published 0.8.1  
 ➕ instance.getList()  

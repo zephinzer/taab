@@ -16,15 +16,19 @@ describe('taab', () => {
 
     it('has the correct instance properties/methods', () => {
       const taabInstanceProperties = Object.getPrototypeOf(taabInstance);
-      expect(taabInstanceProperties).to.contain.keys([
+      expect(taabInstanceProperties).to.have.keys([
         'createBoard',
         'createList',
         'createCard',
-        'getBoards',
+        'deleteBoard',
+        'deleteList',
         'getAllCards',
+        'getBoard',
         'getBoardCards',
         'getBoardLists',
+        'getBoards',
         'getCard',
+        'getList',
         'getListCards',
         'getMember',
         'getOrganisations',

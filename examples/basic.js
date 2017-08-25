@@ -22,6 +22,7 @@ const questions = {
         'get-boards',
         'get-board',
         'delete-board (close)',
+        'delete-list (close)',
         'create-list',
         'get-lists',
         'get-list',
@@ -98,6 +99,7 @@ function loopActionSelection() {
       case 'get-boards': getBoards(loopActionSelection); break;
       case 'get-board': getBoard(loopActionSelection); break;
       case 'delete-board (close)': deleteBoard(loopActionSelection); break;
+      case 'delete-list (close)': deleteList(loopActionSelection); break;
       case 'create-list': createList(loopActionSelection); break;
       case 'get-lists': getBoardLists(loopActionSelection); break;
       case 'get-list': getList(loopActionSelection); break;
@@ -256,6 +258,28 @@ function createList(callback) {
       .finally(callback);
   });
 };
+
+function deleteList(callback) {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'listId',
+      message: 'Paste the list ID here',
+    },
+  ]).then((answers) => {
+    const {listId} = answers;
+    taabInstance
+      .deleteList({
+        listId,
+      })
+      .then((res) => {
+        console.log(res);
+        console.info(` ✅`);
+      })
+      .catch(handleError)
+      .finally(callback);
+  });
+}
 
 function getBoardLists(callback) {
   inquirer.prompt([

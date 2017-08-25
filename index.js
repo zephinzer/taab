@@ -19,6 +19,7 @@ TAAB.prototype.createBoard = taabBoard.create;
 TAAB.prototype.createCard = taabCard.create;
 TAAB.prototype.createList = taabList.create;
 TAAB.prototype.deleteBoard = taabBoard.deleteById;
+TAAB.prototype.deleteList = taabList.deleteById;
 TAAB.prototype.getAllCards = taabCard.queryAll;
 TAAB.prototype.getBoard = taabBoard.get;
 TAAB.prototype.getBoards = taabBoard.query;
